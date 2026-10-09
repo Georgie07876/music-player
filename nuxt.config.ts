@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   },
   modules: ["@pinia/nuxt", "@nuxt/eslint", "@nuxt/icon"],
   runtimeConfig: {
-    audiusSecret: "FBzqIBytzwD9BgjBKQF9GTDxFitQn6mFvdSzGi_nhCU=",
+    audiusSecret: "",
     public: {
       audiusKey: "0xc96a20e0e3bd914db274976d5b3b46564a610036",
     },
