@@ -1,0 +1,22 @@
+# Dependencies and generated output
+node_modules
+.nuxt
+.nitro
+.output
+.cache
+dist
+coverage
+
+# Lockfiles
+package-lock.json
+
+# Course notes and agent harness (edited by hand, not by a formatter)
+docs
+.agent
+.cursor
+.cline
+AGENTS.md
+.clinerules
+
+# Static assets
+public
