@@ -41,9 +41,15 @@ export function useAudio() {
     el.addEventListener("durationchange", () => {
       duration.value = el.duration;
     });
+    el.addEventListener("ended", () => store.handleEnded());
+    el.addEventListener("error", () =>
+      store.handleSourceError(el.error?.code ?? null),
+    );
 
     async function playWithRetry(limit = 3) {
       for (let attempt = 1; attempt <= limit; attempt++) {
+        if (!store.isPlaying) return;
+
         try {
           await el.play();
           return;

@@ -9,6 +9,9 @@
           playerStore.currentTrack?.artist
         }}</span>
       </div>
+      <div class="global-player__error">
+        <ErrorTooltip :code="playerStore.sourceErrorCode" />
+      </div>
 
       <PlayerControls class="global-player__controls" />
     </div>
