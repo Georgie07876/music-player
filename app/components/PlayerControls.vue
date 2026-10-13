@@ -5,6 +5,7 @@
         type="button"
         class="global-player__btn global-player__btn--side"
         aria-label="Previous track"
+        @click="onPrev"
       >
         <Icon name="mdi:skip-previous" />
       </button>
@@ -23,6 +24,7 @@
         type="button"
         class="global-player__btn global-player__btn--side"
         aria-label="Next track"
+        @click="onNext"
       >
         <Icon name="mdi:skip-next" />
       </button>
@@ -32,6 +34,19 @@
 
 <script setup lang="ts">
 const playerStore = usePlayerStore();
+const { currentTime, duration, seek } = useAudio();
+
+function onPrev() {
+  if (currentTime.value < duration.value && currentTime.value > 3) {
+    seek(0);
+    return;
+  }
+  playerStore.prev();
+}
+
+function onNext() {
+  playerStore.next();
+}
 </script>
 
 <style scoped>

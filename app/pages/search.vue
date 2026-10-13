@@ -58,7 +58,7 @@ const tracks = computed(() => (raw.value?.data ?? []).map(toTrack));
 const lastAction = ref("");
 
 function onPlay(track: Track) {
-  playerStore.playTrack(track);
+  playerStore.playTrack(track, tracks.value);
 }
 
 function onFavorite(track: Track) {

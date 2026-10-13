@@ -7,14 +7,14 @@ export const usePlayerStore = defineStore("player", {
     queue: <Track[]>[],
     volume: 0.8,
     muted: false,
+    sourceErrorCode: null as number | null,
   }),
   actions: {
-    playTrack(track: Track) {
+    playTrack(track: Track, list?: Track[]) {
+      this.sourceErrorCode = null;
+      this.queue = list ? [...list] : [track];
       this.currentTrack = track;
       this.isPlaying = true;
-      if (!this.queue.some((item) => item.id === track.id)) {
-        this.queue.push(track);
-      }
     },
     pause() {
       this.isPlaying = false;
@@ -38,6 +38,29 @@ export const usePlayerStore = defineStore("player", {
     },
     unmute() {
       this.muted = false;
+    },
+    next() {
+      const index = this.queue.findIndex((t) => t.id === this.currentTrack?.id);
+      if (index === -1) return;
+      const target = this.queue[(index + 1) % this.queue.length];
+      if (!target) return;
+      this.playTrack(target, this.queue);
+    },
+    prev() {
+      const index = this.queue.findIndex((t) => t.id === this.currentTrack?.id);
+      if (index === -1) return;
+      const target =
+        this.queue[(index - 1 + this.queue.length) % this.queue.length];
+      if (!target) return;
+      this.playTrack(target, this.queue);
+    },
+    handleEnded() {
+      this.next();
+    },
+    handleSourceError(code: number | null) {
+      if (code === 1) return;
+      this.pause();
+      this.sourceErrorCode = code;
     },
   },
 });

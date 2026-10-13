@@ -18,7 +18,7 @@ import type { Track } from "~/utils/mock-tracks";
 const favoritesStore = useFavoritesStore();
 const playerStore = usePlayerStore();
 function onPlay(track: Track) {
-  playerStore.playTrack(track);
+  playerStore.playTrack(track, favoritesStore.tracks);
 }
 
 const lastAction = ref("");
