@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "~/utils/tracks";
 
 const route = useRoute();
 const favoritesStore = useFavoritesStore();
@@ -31,7 +31,7 @@ const query = computed({
     });
   },
 });
-const { tracks, pending, error } = await useSearch(query);
+const { tracks, pending, error } = useSearch(query);
 
 function onPlay(track: Track) {
   playerStore.playTrack(track, tracks.value);

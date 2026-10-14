@@ -10,11 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "~/utils/tracks";
 
 const playerStore = usePlayerStore();
 const favoritesStore = useFavoritesStore();
-const { tracks, pending, error } = await useTracks();
+const { tracks, pending, error } = useTracks();
 const lastAction = ref("");
 
 function onPlay(track: Track) {

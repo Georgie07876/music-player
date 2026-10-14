@@ -1,4 +1,4 @@
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "~/utils/tracks";
 
 const STORAGE_KEY = "omp:favorites:v1";
 

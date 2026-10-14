@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "~/utils/tracks";
 
 const favoritesStore = useFavoritesStore();
 const playerStore = usePlayerStore();

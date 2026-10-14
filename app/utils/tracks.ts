@@ -13,13 +13,10 @@ export interface Album {
   cover: string;
 }
 
-export interface AudiusListResponse {
-  data: unknown[];
+export interface AudiusResponse<T> {
+  data: T;
 }
 
-export interface AudiusSearchResponse {
-  data: unknown[];
-}
 export const mockAlbums: Album[] = [
   {
     id: "a1",

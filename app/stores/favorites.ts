@@ -1,4 +1,4 @@
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "~/utils/tracks";
 
 export const useFavoritesStore = defineStore("favorites", {
   state: () => ({
