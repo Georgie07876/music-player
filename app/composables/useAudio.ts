@@ -86,11 +86,14 @@ export function useAudio() {
 
     watch(
       () => store.currentTrack,
-      () => {
-        if (store.currentTrack === null) {
+      (track) => {
+        if (track === null) {
           return;
         }
-        el.src = streamUrl(store.currentTrack.id);
+
+        currentTime.value = 0;
+        duration.value = 0;
+        el.src = streamUrl(track.id);
         startPlayback();
       },
     );
