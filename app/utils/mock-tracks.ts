@@ -13,6 +13,13 @@ export interface Album {
   cover: string;
 }
 
+export interface AudiusListResponse {
+  data: unknown[];
+}
+
+export interface AudiusSearchResponse {
+  data: unknown[];
+}
 export const mockAlbums: Album[] = [
   {
     id: "a1",
@@ -74,4 +81,13 @@ export function getInitials(name: string): string {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
+}
+
+export function toTrack(raw: any): Track {
+  return {
+    id: String(raw.id),
+    title: raw.title,
+    artist: raw.user?.name ?? "Unknown Artist",
+    duration: Number(raw.duration ?? 0),
+  };
 }

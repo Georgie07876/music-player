@@ -14,11 +14,11 @@
 <script setup lang="ts">
 import type { Track } from "~/utils/mock-tracks";
 
-interface AudiusSearchResponse {
-  data: unknown[];
-}
-
+const route = useRoute();
+const favoritesStore = useFavoritesStore();
+const lastAction = ref("");
 const playerStore = usePlayerStore();
+
 const query = computed({
   get() {
     return String(route.query.q ?? "");
@@ -31,31 +31,7 @@ const query = computed({
     });
   },
 });
-
-const route = useRoute();
-const favoritesStore = useFavoritesStore();
-
-const config = useRuntimeConfig();
-const {
-  data: raw,
-  pending,
-  error,
-} = await useFetch<AudiusSearchResponse>(
-  "https://api.audius.co/v1/tracks/search",
-  {
-    // headers: {
-    //   Authorization: `Bearer ${config.public.audiusSecret}`,
-    // },
-    query: {
-      public_Key: config.public.audiusKey,
-      query: query,
-    },
-  },
-);
-
-const tracks = computed(() => (raw.value?.data ?? []).map(toTrack));
-
-const lastAction = ref("");
+const { tracks, pending, error } = await useSearch(query);
 
 function onPlay(track: Track) {
   playerStore.playTrack(track, tracks.value);
@@ -67,14 +43,5 @@ function onFavorite(track: Track) {
   lastAction.value = wasFavorite
     ? "Removed from favorites"
     : "Added to favorites";
-}
-
-function toTrack(raw: any): Track {
-  return {
-    id: String(raw.id),
-    title: raw.title,
-    artist: raw.user?.name ?? "Unknown Artist",
-    duration: Number(raw.duration ?? 0),
-  };
 }
 </script>
