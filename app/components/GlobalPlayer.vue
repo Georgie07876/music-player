@@ -18,15 +18,13 @@
 
     <div class="global-player__row">
       <div class="global-player__volume">
-        <button
-          type="button"
-          class="global-player__btn"
-          :aria-label="playerStore.muted ? 'Unmute' : 'Mute'"
+        <IconButton
+          size="small"
+          :name-icon="playerStore.muted ? 'mdi:volume-off' : 'mdi:volume-high'"
+          :label="playerStore.muted ? 'Unmute' : 'Mute'"
           @click="playerStore.toggleMute()"
         >
-          <Icon v-if="playerStore.muted" name="mdi:volume-off" />
-          <Icon v-else name="mdi:volume-high" />
-        </button>
+        </IconButton>
 
         <input
           class="global-player__volume-range"
@@ -56,15 +54,7 @@
         >
       </div>
 
-      <button
-        type="button"
-        class="global-player__btn"
-        :aria-label="favoriteLabel"
-        @click="toggleFavorite"
-      >
-        <Icon v-if="isFavorite" name="mdi:heart" />
-        <Icon v-else name="mdi:heart-outline" />
-      </button>
+      <FavoriteButton :is-favorite="isFavorite" @toggle="toggleFavorite" />
     </div>
   </div>
 </template>
@@ -78,10 +68,6 @@ const isFavorite = computed(() => {
   const track = playerStore.currentTrack;
   return track ? favoritesStore.isFavorite(track.id) : false;
 });
-
-const favoriteLabel = computed(() =>
-  isFavorite.value ? "Remove from favorites" : "Add to favorites",
-);
 
 function toggleFavorite() {
   const track = playerStore.currentTrack;
@@ -240,31 +226,6 @@ const durationLabel = computed(() => {
 }
 
 .global-player__volume-range:focus-visible {
-  outline: 2px solid #333;
-  outline-offset: 2px;
-}
-
-.global-player__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: 2.25rem;
-  height: 2.25rem;
-  padding: 0;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  background: #fff;
-  color: #333;
-  cursor: pointer;
-  font-size: 1.25rem;
-}
-
-.global-player__btn:hover {
-  background: #f4f4f4;
-}
-
-.global-player__btn:focus-visible {
   outline: 2px solid #333;
   outline-offset: 2px;
 }

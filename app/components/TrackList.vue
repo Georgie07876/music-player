@@ -3,6 +3,7 @@ import type { Track } from "~/utils/tracks";
 
 defineProps<{
   tracks: Track[];
+  favoriteIds: string[];
 }>();
 
 const emit = defineEmits<{
@@ -20,6 +21,7 @@ const emit = defineEmits<{
       <li v-for="track in tracks" :key="track.id">
         <TrackCard
           :track="track"
+          :is-favorite="favoriteIds.includes(track.id)"
           @play="emit('play', $event)"
           @favorite="emit('favorite', $event)"
         />

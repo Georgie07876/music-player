@@ -25,5 +25,6 @@ export const useFavoritesStore = defineStore("favorites", {
     isFavorite: (state) => {
       return (id: string) => state.tracks.some((item) => item.id === id);
     },
+    favoriteIds: (state) => state.tracks.map((item) => item.id),
   },
 });

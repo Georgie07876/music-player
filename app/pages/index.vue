@@ -5,7 +5,12 @@
     <p v-else-if="error">Could not load tracks.</p>
     <p v-else>{{ lastAction }}</p>
 
-    <TrackList :tracks="tracks" @play="onPlay" @favorite="onFavorite" />
+    <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
+      :tracks="tracks"
+      @play="onPlay"
+      @favorite="onFavorite"
+    />
   </section>
 </template>
 

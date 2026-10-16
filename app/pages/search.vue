@@ -5,7 +5,12 @@
     <p v-if="pending">Loading…</p>
     <p v-else-if="error">Could not load tracks.</p>
     <p v-else>{{ lastAction }}</p>
-    <TrackList :tracks="tracks" @play="onPlay" @favorite="onFavorite">
+    <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
+      :tracks="tracks"
+      @play="onPlay"
+      @favorite="onFavorite"
+    >
       <template #empty> No tracks match “{{ query }}”. </template>
     </TrackList>
   </section>

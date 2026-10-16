@@ -3,6 +3,7 @@ import type { Track } from "~/utils/tracks";
 
 defineProps<{
   track: Track;
+  isFavorite: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -26,7 +27,10 @@ const emit = defineEmits<{
 
     <div class="track-card__actions">
       <AppButton @click="emit('play', track)">Play</AppButton>
-      <AppButton @click="emit('favorite', track)">Favorite</AppButton>
+      <FavoriteButton
+        :is-favorite="isFavorite"
+        @toggle="emit('favorite', track)"
+      />
     </div>
   </article>
 </template>

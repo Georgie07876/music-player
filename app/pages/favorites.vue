@@ -3,6 +3,7 @@
     <h1>Favorites</h1>
     <p>{{ lastAction }}</p>
     <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
       :tracks="favoritesStore.tracks"
       @play="onPlay"
       @favorite="onFavorite"
