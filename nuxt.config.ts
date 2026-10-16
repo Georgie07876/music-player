@@ -17,7 +17,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ["@pinia/nuxt", "@nuxt/eslint", "@nuxt/icon"],
+  modules: ["@pinia/nuxt", "@nuxt/eslint", "@nuxt/icon", "@nuxtjs/storybook"],
   runtimeConfig: {
     audiusSecret: "",
     public: {
