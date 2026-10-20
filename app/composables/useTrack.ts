@@ -1,20 +1,12 @@
 import type { AudiusResponse } from "~/utils/tracks";
 
 export function useTrack(id: MaybeRefOrGetter<string>) {
-  const config = useRuntimeConfig();
-
   const {
     data: raw,
     pending,
     error,
-  } = useFetch<AudiusResponse<unknown>>(
-    () => `https://api.audius.co/v1/tracks/${toValue(id)}`,
-    {
-      query: {
-        public_Key: config.public.audiusKey,
-      },
-    },
-  );
+  } = useFetch<AudiusResponse<unknown>>(() => `/api/tracks/${toValue(id)}`);
+
   const track = computed(() => {
     const item = raw.value?.data;
     return item ? toTrack(item) : null;
