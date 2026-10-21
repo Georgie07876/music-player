@@ -1,5 +1,4 @@
-import type { Track } from "~/utils/tracks";
-
+import type { Track } from "#shared/types/track";
 export const usePlayerStore = defineStore("player", {
   state: () => ({
     currentTrack: null as Track | null,

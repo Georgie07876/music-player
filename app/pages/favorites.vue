@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/tracks";
+import type { Track } from "#shared/types/track";
 
 const favoritesStore = useFavoritesStore();
 const playerStore = usePlayerStore();

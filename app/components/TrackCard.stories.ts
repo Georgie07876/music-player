@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook-vue/nuxt";
 import TrackCard from "./TrackCard.vue";
-import type { Track } from "~/utils/tracks";
+import type { Track } from "#shared/types/track";
 import { fn } from "storybook/test";
 
 const track: Track = {

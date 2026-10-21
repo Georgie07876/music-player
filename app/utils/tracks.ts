@@ -1,20 +1,9 @@
-export interface Track {
-  id: string;
-  title: string;
-  artist: string;
-  duration: number;
-}
-
 export interface Album {
   id: string;
   title: string;
   artist: string;
   year: number;
   cover: string;
-}
-
-export interface AudiusResponse<T> {
-  data: T;
 }
 
 export const mockAlbums: Album[] = [
@@ -78,13 +67,4 @@ export function getInitials(name: string): string {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
-}
-
-export function toTrack(raw: any): Track {
-  return {
-    id: String(raw.id),
-    title: raw.title,
-    artist: raw.user?.name ?? "Unknown Artist",
-    duration: Number(raw.duration ?? 0),
-  };
 }

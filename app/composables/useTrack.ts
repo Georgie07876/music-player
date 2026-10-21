@@ -1,15 +1,11 @@
-import type { AudiusResponse } from "~/utils/tracks";
+import type { ApiResponse } from "#shared/types/api";
+import type { Track } from "#shared/types/track";
 
 export function useTrack(id: MaybeRefOrGetter<string>) {
-  const {
-    data: raw,
-    pending,
-    error,
-  } = useFetch<AudiusResponse<unknown>>(() => `/api/tracks/${toValue(id)}`);
+  const { data, pending, error } = useFetch<ApiResponse<Track>>(
+    () => `/api/tracks/${toValue(id)}`,
+  );
 
-  const track = computed(() => {
-    const item = raw.value?.data;
-    return item ? toTrack(item) : null;
-  });
+  const track = computed(() => data.value?.data ?? null);
   return { track, pending, error };
 }

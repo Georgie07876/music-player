@@ -1,5 +1,4 @@
-import type { Track } from "~/utils/tracks";
-
+import type { Track } from "#shared/types/track";
 export const useFavoritesStore = defineStore("favorites", {
   state: () => ({
     tracks: [] as Track[],

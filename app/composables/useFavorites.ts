@@ -1,5 +1,4 @@
-import type { Track } from "~/utils/tracks";
-
+import type { Track } from "#shared/types/track";
 const STORAGE_KEY = "omp:favorites:v1";
 
 function isTrackList(value: unknown): value is Track[] {

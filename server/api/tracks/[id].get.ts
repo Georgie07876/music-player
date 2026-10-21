@@ -1,13 +1,21 @@
+import type { AudiusResponse } from "#shared/types/audius";
+import { isAudiusTrack, toTrack } from "#shared/utils/track";
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
   const id = getRouterParam(event, "id");
+
+  let payload: AudiusResponse<unknown>;
+
   try {
-    const data = await $fetch(`https://api.audius.co/v1/tracks/${id}`, {
-      query: {
-        public_Key: config.audiusKey,
+    payload = await $fetch<AudiusResponse<unknown>>(
+      `https://api.audius.co/v1/tracks/${id}`,
+      {
+        query: {
+          public_Key: config.audiusKey,
+        },
       },
-    });
-    return data;
+    );
   } catch (error) {
     const status = (error as { statusCode?: number }).statusCode;
 
@@ -21,4 +29,14 @@ export default defineEventHandler(async (event) => {
       cause: error,
     });
   }
+
+  if (!isAudiusTrack(payload.data)) {
+    throw createError({
+      statusCode: 502,
+      statusMessage: "Unexpected response from Audius",
+      cause: payload,
+    });
+  }
+
+  return { data: toTrack(payload.data) };
 });

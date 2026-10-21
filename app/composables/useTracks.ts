@@ -1,15 +1,11 @@
-import type { AudiusResponse } from "~/utils/tracks";
+import type { ApiResponse } from "#shared/types/api";
+import type { Track } from "#shared/types/track";
 
 export function useTracks() {
-  const {
-    data: raw,
-    pending,
-    error,
-  } = useFetch<AudiusResponse<unknown[]>>("/api/trending");
+  const { data, pending, error } =
+    useFetch<ApiResponse<Track[]>>("/api/trending");
 
-  const tracks = computed(() => {
-    const list = raw.value?.data ?? [];
-    return list.map(toTrack);
-  });
+  const tracks = computed(() => data.value?.data ?? []);
+
   return { tracks, pending, error };
 }
