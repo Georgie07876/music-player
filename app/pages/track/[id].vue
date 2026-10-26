@@ -12,5 +12,6 @@
 const route = useRoute();
 const id = computed(() => String(route.params.id));
 
+definePageMeta({ middleware: "track-id" });
 const { track, pending, error } = useTrack(id);
 </script>

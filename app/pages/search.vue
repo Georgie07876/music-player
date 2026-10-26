@@ -24,6 +24,8 @@ const favoritesStore = useFavoritesStore();
 const lastAction = ref("");
 const playerStore = usePlayerStore();
 
+definePageMeta({ middleware: "search-query" });
+
 const query = computed({
   get() {
     return String(route.query.q ?? "");
