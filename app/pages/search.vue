@@ -24,13 +24,7 @@ const favoritesStore = useFavoritesStore();
 const lastAction = ref("");
 const playerStore = usePlayerStore();
 
-useSeoMeta({
-  title: () => (query.value ? `Search: ${query.value}` : "Search"),
-  description: "Search for tracks",
-  ogTitle: () => (query.value ? `Search: ${query.value}` : "Search"),
-});
-
-definePageMeta({ middleware: "search-query" });
+// definePageMeta({ middleware: "search-query" });
 
 const query = computed({
   get() {
@@ -43,6 +37,11 @@ const query = computed({
       query: value.trim() ? { q: value } : {},
     });
   },
+});
+useSeoMeta({
+  title: () => (query.value ? `Search: ${query.value}` : "Search"),
+  description: "Search for tracks",
+  ogTitle: () => (query.value ? `Search: ${query.value}` : "Search"),
 });
 const { tracks, pending, error } = useSearch(query);
 

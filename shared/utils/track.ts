@@ -15,6 +15,7 @@ export function toTrack(dto: AudiusTrackDto): Track {
     title: dto.title,
     artist: dto.user?.name ?? "Unknown Artist",
     duration: Number(dto.duration ?? 0),
+    artwork: dto.artwork?.["150x150"] ?? dto.artwork?.["480x480"],
   };
 }
 

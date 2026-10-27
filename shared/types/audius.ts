@@ -8,6 +8,7 @@ export interface AudiusTrackDto {
   title: string;
   duration?: number;
   user?: AudiusUserDto;
+  artwork?: Record<string, string>;
 }
 
 export interface AudiusResponse<T> {
