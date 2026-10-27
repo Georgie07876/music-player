@@ -22,6 +22,11 @@ function onPlay(track: Track) {
   playerStore.playTrack(track, favoritesStore.tracks);
 }
 
+useSeoMeta({
+  title: "Favorites",
+  description: "Some Favorites tracks",
+});
+
 const lastAction = ref("");
 
 function onFavorite(track: Track) {

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+useHead({
+  titleTemplate: (title?: string) =>
+    title ? `${title} — Open Music Player` : "Open Music Player",
+});
+</script>
+
 <template>
   <div class="app">
     <main class="app-main">

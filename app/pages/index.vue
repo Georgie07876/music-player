@@ -21,6 +21,7 @@ const playerStore = usePlayerStore();
 const favoritesStore = useFavoritesStore();
 const { tracks, pending, error } = useTracks();
 const lastAction = ref("");
+useSeoMeta({ title: "Trending", description: "some description" });
 
 function onPlay(track: Track) {
   playerStore.playTrack(track, tracks.value);

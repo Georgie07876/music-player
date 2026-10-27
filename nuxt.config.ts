@@ -2,6 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: "Open Music Player",
+      htmlAttrs: { lang: "en" },
+    },
+  },
+  routeRules: {
+    "/favorites": { ssr: false },
+    "/playlists": { prerender: true },
+  },
   icon: {
     serverBundle: "local",
     clientBundle: {

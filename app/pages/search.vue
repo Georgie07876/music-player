@@ -24,6 +24,12 @@ const favoritesStore = useFavoritesStore();
 const lastAction = ref("");
 const playerStore = usePlayerStore();
 
+useSeoMeta({
+  title: () => (query.value ? `Search: ${query.value}` : "Search"),
+  description: "Search for tracks",
+  ogTitle: () => (query.value ? `Search: ${query.value}` : "Search"),
+});
+
 definePageMeta({ middleware: "search-query" });
 
 const query = computed({

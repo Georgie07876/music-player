@@ -11,6 +11,17 @@
 <script setup lang="ts">
 const route = useRoute();
 const id = computed(() => String(route.params.id));
+const seoTitle = computed(() => {
+  if (!track.value) return "Track not found";
+  return `«${track.value.title} — ${track.value.artist}»`;
+});
+
+useSeoMeta({
+  title: () => seoTitle.value,
+  ogTitle: () => seoTitle.value,
+  ogDescription: () => track.value?.artist ?? "Track not found",
+  ogType: "music.song",
+});
 
 definePageMeta({ middleware: "track-id" });
 const { track, pending, error } = useTrack(id);
