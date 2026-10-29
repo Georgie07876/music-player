@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
-
+import type { Track } from "#shared/types/track";
 defineProps<{
   track: Track;
+  isFavorite: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -12,53 +12,40 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <article class="track-card">
-    <UserAvatar :initials="getInitials(track.artist)" />
+  <article
+    class="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-1.5 rounded-lg border border-gray-300 p-3"
+  >
+    <NuxtImg
+      v-if="track.artwork"
+      :src="track.artwork"
+      width="48"
+      height="48"
+      sizes="48px"
+      format="webp"
+      class="rounded-full"
+    />
+    <UserAvatar v-else :initials="getInitials(track.artist)" />
 
-    <div class="track-card__info">
-      <NuxtLink :to="`/track/${track.id}`">{{ track.title }}</NuxtLink>
-      <p>{{ track.artist }}</p>
+    <div>
+      <NuxtLink
+        :to="`/track/${track.id}`"
+        class="text-inherit no-underline hover:underline"
+      >
+        {{ track.title }}
+      </NuxtLink>
+      <p class="mt-0.5 text-gray-600">{{ track.artist }}</p>
     </div>
 
-    <span class="track-card__duration">{{
-      formatDuration(track.duration)
-    }}</span>
+    <span class="text-gray-500 tabular-nums">
+      {{ formatDuration(track.duration) }}
+    </span>
 
-    <div class="track-card__actions">
+    <div class="col-start-2 col-span-2 flex gap-2">
       <AppButton @click="emit('play', track)">Play</AppButton>
-      <AppButton @click="emit('favorite', track)">Favorite</AppButton>
+      <FavoriteButton
+        :is-favorite="isFavorite"
+        @toggle="emit('favorite', track)"
+      />
     </div>
   </article>
 </template>
-
-<style scoped>
-.track-card {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 0.35rem 0.75rem;
-  align-items: center;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.track-card__info p {
-  margin: 0.15rem 0 0;
-  color: #555;
-}
-
-.track-card__duration {
-  color: #666;
-  font-variant-numeric: tabular-nums;
-}
-
-.track-card__actions {
-  grid-column: 2 / -1;
-  display: flex;
-  gap: 0.5rem;
-}
-a {
-  color: inherit;
-  text-decoration: none;
-}
-</style>

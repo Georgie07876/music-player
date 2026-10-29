@@ -5,20 +5,27 @@
     <p v-if="pending">Loading…</p>
     <p v-else-if="error">Could not load tracks.</p>
     <p v-else>{{ lastAction }}</p>
-    <TrackList :tracks="tracks" @play="onPlay" @favorite="onFavorite">
+    <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
+      :tracks="tracks"
+      @play="onPlay"
+      @favorite="onFavorite"
+    >
       <template #empty> No tracks match “{{ query }}”. </template>
     </TrackList>
   </section>
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "#shared/types/track";
 
-interface AudiusSearchResponse {
-  data: unknown[];
-}
-
+const route = useRoute();
+const favoritesStore = useFavoritesStore();
+const lastAction = ref("");
 const playerStore = usePlayerStore();
+
+// definePageMeta({ middleware: "search-query" });
+
 const query = computed({
   get() {
     return String(route.query.q ?? "");
@@ -31,34 +38,15 @@ const query = computed({
     });
   },
 });
-
-const route = useRoute();
-const favoritesStore = useFavoritesStore();
-
-const config = useRuntimeConfig();
-const {
-  data: raw,
-  pending,
-  error,
-} = await useFetch<AudiusSearchResponse>(
-  "https://api.audius.co/v1/tracks/search",
-  {
-    // headers: {
-    //   Authorization: `Bearer ${config.public.audiusSecret}`,
-    // },
-    query: {
-      public_Key: config.public.audiusKey,
-      query: query,
-    },
-  },
-);
-
-const tracks = computed(() => (raw.value?.data ?? []).map(toTrack));
-
-const lastAction = ref("");
+useSeoMeta({
+  title: () => (query.value ? `Search: ${query.value}` : "Search"),
+  description: "Search for tracks",
+  ogTitle: () => (query.value ? `Search: ${query.value}` : "Search"),
+});
+const { tracks, pending, error } = useSearch(query);
 
 function onPlay(track: Track) {
-  playerStore.playTrack(track);
+  playerStore.playTrack(track, tracks.value);
 }
 
 function onFavorite(track: Track) {
@@ -67,14 +55,5 @@ function onFavorite(track: Track) {
   lastAction.value = wasFavorite
     ? "Removed from favorites"
     : "Added to favorites";
-}
-
-function toTrack(raw: any): Track {
-  return {
-    id: String(raw.id),
-    title: raw.title,
-    artist: raw.user?.name ?? "Unknown Artist",
-    duration: Number(raw.duration ?? 0),
-  };
 }
 </script>

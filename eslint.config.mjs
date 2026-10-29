@@ -5,6 +5,6 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 export default withNuxt(eslintConfigPrettier, {
   name: "omp/rules",
   rules: {
-    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-explicit-any": "error",
   },
 });

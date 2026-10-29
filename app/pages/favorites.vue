@@ -3,6 +3,7 @@
     <h1>Favorites</h1>
     <p>{{ lastAction }}</p>
     <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
       :tracks="favoritesStore.tracks"
       @play="onPlay"
       @favorite="onFavorite"
@@ -13,13 +14,18 @@
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
+import type { Track } from "#shared/types/track";
 
 const favoritesStore = useFavoritesStore();
 const playerStore = usePlayerStore();
 function onPlay(track: Track) {
-  playerStore.playTrack(track);
+  playerStore.playTrack(track, favoritesStore.tracks);
 }
+
+useSeoMeta({
+  title: "Favorites",
+  description: "Some Favorites tracks",
+});
 
 const lastAction = ref("");
 

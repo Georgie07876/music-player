@@ -5,45 +5,26 @@
     <p v-else-if="error">Could not load tracks.</p>
     <p v-else>{{ lastAction }}</p>
 
-    <TrackList :tracks="tracks" @play="onPlay" @favorite="onFavorite" />
+    <TrackList
+      :favorite-ids="favoritesStore.favoriteIds"
+      :tracks="tracks"
+      @play="onPlay"
+      @favorite="onFavorite"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
-import type { Track } from "~/utils/mock-tracks";
-
-interface AudiusListResponse {
-  data: unknown[];
-}
+import type { Track } from "#shared/types/track";
 
 const playerStore = usePlayerStore();
 const favoritesStore = useFavoritesStore();
-const config = useRuntimeConfig();
-const {
-  data: raw,
-  pending,
-  error,
-} = await useFetch<AudiusListResponse>(
-  "https://api.audius.co/v1/tracks/trending",
-  {
-    // headers: {
-    //   Authorization: `Bearer ${config.public.audiusSecret}`,
-    // },
-    query: {
-      public_Key: config.public.audiusKey,
-    },
-  },
-);
-
-const tracks = computed(() => {
-  const list = raw.value?.data ?? [];
-  return list.map(toTrack);
-});
-
+const { tracks, pending, error } = useTracks();
 const lastAction = ref("");
+useSeoMeta({ title: "Trending", description: "some description" });
 
 function onPlay(track: Track) {
-  playerStore.playTrack(track);
+  playerStore.playTrack(track, tracks.value);
 }
 
 function onFavorite(track: Track) {
@@ -52,14 +33,5 @@ function onFavorite(track: Track) {
   lastAction.value = wasFavorite
     ? "Removed from favorites"
     : "Added to favorites";
-}
-
-function toTrack(raw: any): Track {
-  return {
-    id: String(raw.id),
-    title: raw.title,
-    artist: raw.user?.name ?? "Unknown Artist",
-    duration: Number(raw.duration ?? 0),
-  };
 }
 </script>
