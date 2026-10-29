@@ -5,4 +5,6 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+useSeoMeta({ title: "Playlists" });
+</script>

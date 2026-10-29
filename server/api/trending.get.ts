@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
 
     return { data: toTracks(payload.data) };
   } catch (error) {
+    console.error("[api] trending failed:", error);
     throw createError({
       statusCode: 502,
       statusMessage: "Audius is unavailable",

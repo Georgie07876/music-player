@@ -13,4 +13,8 @@ const album = computed(() => {
   const id = String(route.params.id);
   return mockAlbums.find((item) => item.id === id);
 });
+
+useSeoMeta({
+  title: () => (album.value ? album.value.title : "Playlist not found"),
+});
 </script>
