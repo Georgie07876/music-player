@@ -15,16 +15,28 @@ export default defineNuxtConfig({
   routeRules: {
     "/favorites": { ssr: false },
     "/playlists": { prerender: true },
+    "/api/trending": { swr: 60 },
+    "/api/search": { swr: 60 },
+    "/api/tracks/**": { swr: 300 },
   },
   image: {
     domains: [
       "v.monophonic.digital",
       "audius-01.staked.cloud",
       "audius-02.staked.cloud",
+      "audius-03.staked.cloud",
+      "audius-04.staked.cloud",
       "audius-discovery-1.altego.net",
-      "val002.open-audio-validator.com",
+      "audius-discovery-3.altego.net",
       "cn2.mainnet.audiusindex.org",
+      "cn3.mainnet.audiusindex.org",
     ],
+    ipx: {
+      http: {
+        maxAge: 2592000,
+        ignoreCacheControl: true,
+      },
+    },
   },
   icon: {
     serverBundle: "local",
